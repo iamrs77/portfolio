@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#ff7a45"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0f0f11"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <!-- Source of truth -->
+    <rect x="90" y="345" width="350" height="180" rx="18" fill="#151517" stroke="#2f2f33" stroke-width="2"/>
+    <text x="122" y="392" font-size="15" letter-spacing="2" fill="#ff7a45">SOURCE OF TRUTH</text>
+    <text x="122" y="440" font-size="27" fill="#ededea">data/projects.js</text>
+    <text x="122" y="480" font-size="18" fill="#8a8984">one entry per project</text>
+
+    <!-- Data layer -->
+    <rect x="550" y="315" width="380" height="240" rx="18" fill="#17130f" stroke="#ff7a45" stroke-width="2"/>
+    <text x="582" y="362" font-size="15" letter-spacing="2" fill="#ff7a45">DATA LAYER</text>
+    <text x="582" y="410" font-size="27" fill="#ededea">lib/projects.js</text>
+    <circle cx="590" cy="451" r="4" fill="#ff7a45"/>
+    <text x="606" y="457" font-size="18" fill="#a3a29c">validate at build time</text>
+    <circle cx="590" cy="485" r="4" fill="#ff7a45"/>
+    <text x="606" y="491" font-size="18" fill="#a3a29c">sort, hide drafts</text>
+    <circle cx="590" cy="519" r="4" fill="#ff7a45"/>
+    <text x="606" y="525" font-size="18" fill="#a3a29c">fall back on missing images</text>
+
+    <!-- Outputs -->
+    <rect x="1090" y="125" width="420" height="110" rx="16" fill="#151517" stroke="#2f2f33" stroke-width="2"/>
+    <text x="1120" y="172" font-size="23" fill="#ededea">/projects/</text>
+    <text x="1120" y="206" font-size="17" fill="#8a8984">listing &amp; category filters</text>
+
+    <rect x="1090" y="295" width="420" height="110" rx="16" fill="#151517" stroke="#2f2f33" stroke-width="2"/>
+    <text x="1120" y="342" font-size="23" fill="#ededea">/projects/[slug]/</text>
+    <text x="1120" y="376" font-size="17" fill="#8a8984">case-study pages (SSG)</text>
+
+    <rect x="1090" y="465" width="420" height="110" rx="16" fill="#151517" stroke="#2f2f33" stroke-width="2"/>
+    <text x="1120" y="512" font-size="23" fill="#ededea">sitemap.xml</text>
+    <text x="1120" y="546" font-size="17" fill="#8a8984">search engine discovery</text>
+
+    <rect x="1090" y="635" width="420" height="110" rx="16" fill="#151517" stroke="#2f2f33" stroke-width="2"/>
+    <text x="1120" y="682" font-size="23" fill="#ededea">social-preview.png</text>
+    <text x="1120" y="716" font-size="17" fill="#8a8984">generated link previews</text>
+  </g>
+
+  <!-- Connectors -->
+  <g fill="none" stroke="#ff7a45" stroke-width="2.5" marker-end="url(#arrow)">
+    <path d="M440 435H542"/>
+    <path d="M930 435C1010 435 1000 180 1082 180"/>
+    <path d="M930 435C1010 435 1000 350 1082 350"/>
+    <path d="M930 435C1010 435 1000 520 1082 520"/>
+    <path d="M930 435C1010 435 1000 690 1082 690"/>
+  </g>
+  <circle cx="490" cy="435" r="5" fill="#ff7a45"/>
+  <circle cx="1040" cy="241" r="5" fill="#ff7a45"/>
+  <circle cx="1040" cy="611" r="5" fill="#ff7a45"/>
+
+  <text x="90" y="820" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#5d5c57">One data entry → every page, card, sitemap entry and social image.</text>
+</svg>

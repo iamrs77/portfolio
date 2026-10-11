@@ -1,0 +1,59 @@
+# Deploys the static export to GitHub Pages.
+#
+# One-time setup:
+#   1. Settings → Pages → Build and deployment → Source: "GitHub Actions".
+#   2. Settings → Secrets and variables → Actions → Variables → add DEPLOY_TO_GITHUB_PAGES = true
+#      (this opts pushes to main into deploying; you can always run it manually from the Actions tab).
+# Optional variables: SITE_URL (if you use a custom domain), FORMSPREE_FORM_ID (enables the contact form).
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || vars.DEPLOY_TO_GITHUB_PAGES == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - id: pages
+        uses: actions/configure-pages@v6
+      - run: npm ci
+      - name: Build static export
+        run: npm run build:static
+        env:
+          # "/<repo>" for project sites, empty for <user>.github.io or a custom domain.
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || steps.pages.outputs.base_url }}
+          NEXT_PUBLIC_FORMSPREE_FORM_ID: ${{ vars.FORMSPREE_FORM_ID }}
+          NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN: ${{ vars.CLOUDFLARE_ANALYTICS_TOKEN }}
+      # Stop GitHub Pages from running Jekyll, which would hide the `_next/` folder.
+      - run: touch out/.nojekyll
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
