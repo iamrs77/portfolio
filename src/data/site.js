@@ -5,9 +5,9 @@
 export const siteConfig = {
   name: "Rohit Sharma",
   initials: "RS",
-  title: "Full-Stack Software Engineer",
+  title: "Software Engineer",
   description:
-    "Rohit Sharma is a full-stack software engineer in Toronto with 4+ years of experience building scalable web applications with React, Node.js, microservices and SQL.",
+    "Rohit Sharma is a software engineer in Toronto with 4+ years of experience building scalable web applications with React, Node.js, microservices and SQL.",
   // Production URL. NEXT_PUBLIC_SITE_URL, or the URL Vercel/Netlify provide, overrides it.
   url: "https://example.com",
   locale: "en_US",
