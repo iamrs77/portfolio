@@ -2,13 +2,10 @@ import { siteConfig } from "@/data/site";
 
 /**
  * The public origin (plus base path, if any) of the deployed site, without a trailing slash.
- * Priority: NEXT_PUBLIC_SITE_URL -> Vercel / Netlify production URL -> `siteConfig.url`.
+ * It's `siteConfig.url`, unless NEXT_PUBLIC_SITE_URL overrides it (the GitHub Pages workflow does).
  */
 export function getSiteUrl() {
-  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const netlifyUrl = process.env.NETLIFY === "true" ? process.env.URL : undefined;
-  const url =
-    process.env.NEXT_PUBLIC_SITE_URL || (vercelUrl ? `https://${vercelUrl}` : netlifyUrl) || siteConfig.url;
+  const url = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
   return url.replace(/\/+$/, "");
 }
 

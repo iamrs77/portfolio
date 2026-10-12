@@ -206,14 +206,14 @@ Some names inside `src/app/` are set by Next.js and can't be changed:
 | ---------------- | ---------------------- | ------ | ---------------------------------------- |
 | Vercel           | `npm run build`        | auto   | No configuration needed                  |
 | Netlify          | `npm run build`        | auto   | Detects Next.js automatically            |
-| Cloudflare Pages | `npm run build:static` | `out`  | Set `NEXT_PUBLIC_SITE_URL`               |
+| Cloudflare Pages | `npm run build:static` | `out`  | Set `NODE_VERSION=24`                    |
 | GitHub Pages     | included workflow      | `out`  | See below                                |
 
-**Vercel:** push the repo to GitHub, import it at [vercel.com/new](https://vercel.com/new) and click Deploy. The site URL is picked up automatically. With a custom domain, set `NEXT_PUBLIC_SITE_URL` to it.
+**Vercel:** push the repo to GitHub, import it at [vercel.com/new](https://vercel.com/new) and click Deploy. If the address changes (for example to a custom domain), update `url` in `src/data/site.js`.
 
-**Netlify:** import the repo at [app.netlify.com](https://app.netlify.com/start). It runs `npm run build` and picks up the site URL automatically.
+**Netlify:** import the repo at [app.netlify.com](https://app.netlify.com/start). It runs `npm run build`.
 
-**Cloudflare Pages:** create a project from the repo with build command `npm run build:static` and output directory `out`, and set `NEXT_PUBLIC_SITE_URL=https://<project>.pages.dev` and `NODE_VERSION=24`.
+**Cloudflare Pages:** create a project from the repo with build command `npm run build:static` and output directory `out`, and set the environment variable `NODE_VERSION=24`.
 
 **GitHub Pages:** `.github/workflows/deploy-pages.yml` builds the static export and deploys it, with the base path set automatically for `https://<user>.github.io/<repo>/`.
 
@@ -229,7 +229,7 @@ All optional. Copy `.env.example` to `.env.local` to set them locally.
 
 | Variable                        | Purpose                                                                                  |
 | ------------------------------- | ---------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`          | Public URL for canonical links, the sitemap and preview images. Automatic on Vercel/Netlify. |
+| `NEXT_PUBLIC_SITE_URL`          | Overrides `url` in `site.js` for canonical links, the sitemap and preview images.            |
 | `NEXT_PUBLIC_FORMSPREE_FORM_ID` | Turns on the contact form. Without it, the contact section lists email and social links.  |
 | `NEXT_PUBLIC_BASE_PATH`         | Only for hosting under a sub-path. The GitHub Pages workflow sets it.                     |
 | `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` | Turns on visitor analytics (see below).                                         |

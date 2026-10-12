@@ -8,8 +8,8 @@ export const siteConfig = {
   title: "Software Engineer",
   description:
     "Rohit Sharma is a software engineer in Toronto with 4+ years of experience building scalable web applications with React, Node.js, microservices and SQL.",
-  // Production URL. NEXT_PUBLIC_SITE_URL, or the URL Vercel/Netlify provide, overrides it.
-  url: "https://example.com",
+  // Public address of the site, used for link previews, canonical links and the sitemap.
+  url: "https://rohitsharmaportfolio.vercel.app",
   locale: "en_US",
   email: "rohit227sharma@gmail.com",
   location: "Toronto, Canada",
