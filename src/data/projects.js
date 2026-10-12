@@ -77,4 +77,71 @@ export const projects = [
       ],
     },
   },
+  {
+    slug: "bookmarks-api",
+    title: "Bookmarks API",
+    summary:
+      "A REST API where people sign up, log in and save their own bookmarks. Built with NestJS, Prisma and PostgreSQL, with tests, Docker and CI.",
+    description: [
+      "A backend with the parts a real API needs: JWT login, input validation, database migrations, unit and end-to-end tests, Swagger docs, Docker and CI.",
+      "Every user only ever sees their own bookmarks, and the whole thing starts with a single docker compose command.",
+    ],
+    category: "backend",
+    year: 2024,
+    featured: true,
+    order: 2,
+    stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "JWT", "Docker", "Jest", "GitHub Actions"],
+    highlights: [
+      "JWT login with argon2-hashed passwords",
+      "Users can only read and change their own bookmarks",
+      "Unit and end-to-end tests run in CI on every push",
+    ],
+    tags: ["nestjs", "rest-api", "postgresql", "prisma", "docker"],
+    cover: {
+      src: "/images/projects/bookmarks-api/cover.png",
+      alt: "Swagger docs for the Bookmarks API listing the auth, users and bookmarks endpoints",
+    },
+    links: {
+      repo: "https://github.com/iamrs77/NestJS-API",
+    },
+    caseStudy: {
+      problem:
+        "A small but complete backend: people sign up, log in and keep a private list of bookmarks. The aim was to build it with everything a production API needs, not just the happy path.",
+      goals: [
+        "Secure sign up and log in with tokens",
+        "Keep each user's bookmarks private",
+        "Check every request and return clear errors",
+        "Run the database and the API with one command",
+      ],
+      architecture: [
+        {
+          title: "NestJS modules",
+          description:
+            "Auth, users and bookmarks are separate modules. A global Prisma module shares one database connection, and a Passport JWT guard protects the user and bookmark routes.",
+        },
+        {
+          title: "PostgreSQL with Prisma",
+          description:
+            "Schema changes go through Prisma migrations. Bookmarks are indexed by user, and deleting a user also deletes their bookmarks.",
+        },
+        {
+          title: "Docs and setup",
+          description:
+            "Swagger docs are generated from the DTOs and served at /docs. Docker Compose starts PostgreSQL, runs the migrations and starts the API.",
+        },
+      ],
+      challenges: [
+        {
+          challenge: "Not leaking information",
+          solution:
+            "A wrong password and an unknown email return the same 401, and someone else's bookmark returns the same 404 as one that doesn't exist, so the API never reveals which accounts or ids exist.",
+        },
+        {
+          challenge: "Testing against a real database",
+          solution:
+            "End-to-end tests start the real app against a separate test database and cover every endpoint, including a second user trying to read, change and delete the first user's bookmark. GitHub Actions runs them on every push, and also checks that docker compose really starts the API.",
+        },
+      ],
+    },
+  },
 ];
