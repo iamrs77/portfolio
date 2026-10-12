@@ -185,7 +185,7 @@ export const projects = [
     category: "backend",
     year: 2024,
     featured: true,
-    order: 3,
+    order: 4,
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "JWT", "Docker", "Jest", "GitHub Actions"],
     highlights: [
       "JWT login with argon2-hashed passwords",
@@ -236,6 +236,109 @@ export const projects = [
           challenge: "Testing against a real database",
           solution:
             "End-to-end tests start the real app against a separate test database and cover every endpoint, including a second user trying to read, change and delete the first user's bookmark. GitHub Actions runs them on every push, and also checks that docker compose really starts the API.",
+        },
+      ],
+    },
+  },
+  {
+    slug: "foodiez",
+    title: "Foodiez",
+    summary:
+      "A food ordering web app: customers order from local restaurants, and vendors manage their own menus. React, Node.js and MongoDB, with tests, Docker and CI.",
+    description: [
+      "Customers browse and search restaurants, build a cart from one restaurant and place orders. Vendors add restaurants and manage dishes, and can only change their own. Demo accounts are built in, so the app is ready to try as soon as it starts.",
+      "I first built it in 2021 as an Express API and four versions of the same React app. In 2026 I merged the API and the Tailwind version into one repo and rebuilt both, fixing security problems and adding tests, Docker and CI.",
+    ],
+    category: "full-stack",
+    year: 2026,
+    featured: true,
+    order: 3,
+    stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "Tailwind CSS", "Vite", "zod", "JWT",
+            "Vitest", "Docker", "GitHub Actions"],
+    highlights: [
+      "Vendors can only change their own restaurants, checked by the API on every request",
+      "Orders keep the price that was paid, even after a menu changes",
+      "60 tests, plus a CI check that the Docker setup starts",
+    ],
+    tags: ["react", "nodejs", "express", "mongodb", "food-ordering"],
+    cover: {
+      src: "/images/projects/foodiez/cover.png",
+      alt: "Foodiez home page with a restaurant search box and cards for Spice Route, Napoli Slice and Dosa Corner",
+    },
+    links: {
+      repo: "https://github.com/iamrs77/foodiez",
+    },
+    caseStudy: {
+      problem:
+        "The 2021 version worked, but it had real security holes: anyone could sign up as an admin, and any vendor could edit any restaurant. Its request handling crashed easily, and it had no real order history. The rebuild set out to fix all of that.",
+      goals: [
+        "Browse, fill a cart and order without friction",
+        "Vendors manage their own restaurants and menus, and nothing else",
+        "Safe by default: checked input, hashed passwords and rate-limited logins",
+        "Run the whole app with one command",
+      ],
+      architecture: [
+        {
+          title: "React web app",
+          description:
+            "React 19 with Vite, React Router and Tailwind CSS. Every API call goes through Redux Toolkit's RTK Query, so loading, caching and errors are handled in one place.",
+        },
+        {
+          title: "Express API",
+          description:
+            "Express 5 with Mongoose. zod checks every request body, and roles and ownership are checked on the server, not just hidden in the interface.",
+        },
+        {
+          title: "One-command setup",
+          description:
+            "Docker Compose runs MongoDB, the API and nginx serving the web app. The quick start runs the API with an in-memory database filled with demo data.",
+        },
+      ],
+      challenges: [
+        {
+          challenge: "Permissions only enforced in the browser",
+          solution:
+            "The API now checks who you are and what you own on every request. Tests confirm a vendor can't change another vendor's restaurant and a customer can't touch someone else's cart.",
+        },
+        {
+          challenge: "Old orders changing with the menu",
+          solution:
+            "Each order stores a copy of its dishes and prices, so editing or deleting a dish later doesn't change what a customer paid.",
+        },
+        {
+          challenge: "Revealing who has an account",
+          solution:
+            "A wrong email and a wrong password give the same error, and login attempts are rate limited.",
+        },
+      ],
+      gallery: [
+        {
+          src: "/images/projects/foodiez/menu.png",
+          alt: "Spice Route's menu with veg and non-veg dishes, quantity controls and a cart summary bar",
+          caption: "A restaurant menu, with the cart summary at the bottom.",
+          width: 1280,
+          height: 860,
+        },
+        {
+          src: "/images/projects/foodiez/cart.png",
+          alt: "Cart with Paneer Butter Masala and Garlic Naan from Spice Route, quantity controls and bill details",
+          caption: "The cart. One order comes from one restaurant, like real delivery apps.",
+          width: 1280,
+          height: 860,
+        },
+        {
+          src: "/images/projects/foodiez/orders.png",
+          alt: "Order history after placing an order, listing each order's dishes, prices and total",
+          caption: "Order history keeps the price that was actually paid.",
+          width: 1280,
+          height: 860,
+        },
+        {
+          src: "/images/projects/foodiez/vendor-restaurants.png",
+          alt: "Vendor's My restaurants page with three restaurant cards and an Add restaurant button",
+          caption: "Vendors see and manage only their own restaurants.",
+          width: 1280,
+          height: 860,
         },
       ],
     },
