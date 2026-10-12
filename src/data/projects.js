@@ -78,6 +78,102 @@ export const projects = [
     },
   },
   {
+    slug: "stock-signal-advisor",
+    title: "Stock Signal Advisor",
+    summary:
+      "A Streamlit app that turns technical indicators into BUY, SELL or HOLD verdicts, with the reasons, for day trading and long-term investing.",
+    description: [
+      "Type a ticker and the app scores VWAP, moving averages, RSI, MACD and Bollinger Bands into a verdict and explains each part of it. An intraday view works on 1 to 60 minute bars, and a long-term view follows the 200-day trend.",
+      "It also backtests its own rules, sizes positions from your account and risk per trade, and picks the best free live price source for the time of day. It's a rules-based second opinion, not financial advice.",
+    ],
+    category: "data",
+    year: 2026,
+    featured: true,
+    order: 2,
+    stack: ["Python", "Streamlit", "pandas", "NumPy", "yfinance", "Alpaca API", "Finnhub API", "pytest", "GitHub Actions"],
+    highlights: [
+      "Every verdict comes with the reasons behind it",
+      "Backtests replay history through the same rules as the live view",
+      "78 tests in CI and a free live demo on Streamlit Cloud",
+    ],
+    tags: ["python", "streamlit", "trading", "technical-analysis", "backtesting"],
+    cover: {
+      src: "/images/projects/stock-signal-advisor/cover.png",
+      alt: "Stock Signal Advisor's Intraday tab showing a SELL verdict for SOXL with price, score and agreement",
+    },
+    links: {
+      repo: "https://github.com/iamrs77/stock-signal-advisor",
+      live: "https://stock-signal-advisor.streamlit.app/",
+    },
+    caseStudy: {
+      problem:
+        "Day trading means reading several indicators at once and deciding fast, which makes it easy to act on emotion. The app scores the same indicators the same way every time and shows its reasoning, as a calm second opinion.",
+      goals: [
+        "A clear verdict with the reasons behind it",
+        "Separate views for intraday trading and long-term holding",
+        "Test the rules on history before trusting them",
+        "Use free, real-time market data where possible",
+      ],
+      architecture: [
+        {
+          title: "Analysis separate from the UI",
+          description:
+            "The signal, intraday, risk, backtest and history modules have no Streamlit code, so the app, the backtests and a background logger all run exactly the same rules.",
+        },
+        {
+          title: "Best free data for each session",
+          description:
+            "Finnhub during regular hours, Yahoo before and after the market, and Alpaca's IEX feed for real-time intraday bars, with a fallback whenever a source isn't available.",
+        },
+        {
+          title: "Views that refresh on their own",
+          description:
+            "The intraday verdict refreshes every 10 seconds with Streamlit fragments, while heavier panels like the chart update on a slower cycle.",
+        },
+      ],
+      challenges: [
+        {
+          challenge: "Choppy markets",
+          solution:
+            "When strong signals disagree, or the price is hugging VWAP, the app says WAIT instead of forcing a BUY or SELL.",
+        },
+        {
+          challenge: "Knowing whether the rules work",
+          solution:
+            "Backtests replay history bar by bar through the live engine and report win rate, drawdown and profit factor next to buy-and-hold. They don't include fees or slippage, and the app says so.",
+        },
+        {
+          challenge: "A public demo everyone shares",
+          solution:
+            "On Streamlit Cloud every visitor uses the same server, so a demo mode keeps each visitor's trade log in their own session instead of a shared file.",
+        },
+      ],
+      gallery: [
+        {
+          src: "/images/projects/stock-signal-advisor/long-term.png",
+          alt: "Long-term price chart with 50- and 200-day averages, Bollinger Bands, RSI and MACD",
+          caption: "Long-term view: candles with moving averages, RSI and MACD.",
+          width: 1400,
+          height: 741,
+        },
+        {
+          src: "/images/projects/stock-signal-advisor/backtest.png",
+          alt: "Backtest results with trades, win rate, total return, drawdown and an equity curve",
+          caption: "Backtest of the 200-day trend rules over 5 years.",
+          width: 1400,
+          height: 836,
+        },
+        {
+          src: "/images/projects/stock-signal-advisor/know-your-ticker.png",
+          alt: "Risk profile for SOXL showing its daily swing, where it sits in its yearly range and when it moves most",
+          caption: "Know your ticker: a measured risk profile, not a forecast.",
+          width: 1400,
+          height: 704,
+        },
+      ],
+    },
+  },
+  {
     slug: "bookmarks-api",
     title: "Bookmarks API",
     summary:
@@ -89,7 +185,7 @@ export const projects = [
     category: "backend",
     year: 2024,
     featured: true,
-    order: 2,
+    order: 3,
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "JWT", "Docker", "Jest", "GitHub Actions"],
     highlights: [
       "JWT login with argon2-hashed passwords",
