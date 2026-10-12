@@ -57,6 +57,9 @@ export default function RootLayout({ children }) {
       lang="en"
       // The theme script adds the `dark` class before React hydrates.
       suppressHydrationWarning
+      // globals.css scrolls smoothly for in-page links. This tells Next.js to turn that off while it
+      // opens a new page, so the page starts at the top instead of visibly scrolling up.
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <head>
