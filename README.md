@@ -158,7 +158,7 @@ src/
 │       └── apple-touch-icon.png/      Home-screen icon on phones
 │
 ├── components/                        Building blocks used by the pages
-│   ├── layout/                        Header (with resume button), footer, navigation, theme toggle, back-to-top button, analytics
+│   ├── layout/                        Header (with resume button), footer, navigation, theme toggle, night-mode torch light, back-to-top button, analytics
 │   ├── sections/                      Home page sections: hero, about, skills, projects, experience, contact
 │   ├── projects/                      Project card, grid, filters and the project page
 │   ├── providers/                     App-wide setup for the animation library
@@ -194,7 +194,7 @@ Some names inside `src/app/` are set by Next.js and can't be changed:
 ## How it works
 
 - `lib/projects.js` checks, sorts and filters the projects once at build time, and every page reads from it.
-- Pages render on the server at build time. Only the interactive parts (theme toggle, mobile menu, project filters, hero diagram, contact form, scroll animations) and the certification expiry label run in the browser.
+- Pages render on the server at build time. Only the interactive parts (theme toggle, mobile menu, project filters, hero diagram, contact form, scroll animations, night-mode torch light) and the certification expiry label run in the browser.
 - Every page is pre-rendered, and unknown project URLs return a 404.
 - The hero animation is plain CSS. Scroll animations use Motion and only move opacity and position. All animation is turned off for visitors who prefer reduced motion.
 - Pages have proper landmarks, a skip link, visible focus outlines, keyboard support and readable contrast in both themes.

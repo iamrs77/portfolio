@@ -160,6 +160,41 @@
   }
 }
 
+/*
+ * Night-mode torch (components/layout/torch-light.jsx): warm light that follows the mouse.
+ * "screen" blending brightens what's underneath without washing out text.
+ * Shown only in the dark theme, with a mouse, and when reduced motion isn't requested.
+ */
+.torch-light {
+  --torch-size: 520px;
+  position: fixed;
+  top: calc(var(--torch-size) / -2);
+  left: calc(var(--torch-size) / -2);
+  z-index: 60;
+  display: none;
+  width: var(--torch-size);
+  height: var(--torch-size);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(255 226 190 / 0.3),
+    rgb(255 210 165 / 0.18) 50%,
+    rgb(255 195 145 / 0.06) 85%,
+    transparent
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .dark .torch-light {
+    display: block;
+  }
+}
+
 /* Hide decorative SVG animation for people who prefer reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   .motion-decor {

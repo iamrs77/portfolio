@@ -3,6 +3,7 @@ import { Analytics } from "@/components/layout/analytics";
 import { BackToTop } from "@/components/layout/back-to-top";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { TorchLight } from "@/components/layout/torch-light";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { siteConfig } from "@/data/site";
 import { themeInitScript } from "@/lib/theme";
@@ -83,6 +84,7 @@ export default function RootLayout({ children }) {
           <SiteFooter />
           <BackToTop />
         </MotionProvider>
+        <TorchLight />
         <Analytics />
       </body>
     </html>
