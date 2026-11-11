@@ -8,7 +8,7 @@ export const experiences = [
     companyUrl: "https://mi9retail.com",
     location: "Toronto, Canada",
     employmentType: "Full-time",
-    start: "2022-02",
+    start: "2024-02",
     summary: "Building enterprise merchant solutions.",
     achievements: [
       "Architected an asynchronous job-queuing microservice with Node.js, BullMQ and Redis to offload heavy Excel data processing, eliminating main-thread UI freezes and timeout errors.",
