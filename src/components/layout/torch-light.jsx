@@ -5,8 +5,9 @@ import { useEffect, useRef } from "react";
 const CLICKABLE = "a, button, [role='button'], summary, label";
 const TEXT_FIELD = "input, textarea, select, [contenteditable='true']";
 const START_ANGLE = -35; // degrees; up and to the right
-const MIN_STEP = 6; // pixels the mouse must move before the torch turns that way
-const TURN_SPEED = 0.2; // share of the remaining turn made each frame
+// How sensitive the torch is:
+const MIN_STEP = 24; // pixels the mouse must travel before the torch turns that way. Higher = steadier.
+const TURN_SPEED = 0.08; // share of the remaining turn made each frame, 0 to 1. Lower = slower, calmer swing.
 
 /**
  * Night mode only: the mouse pointer becomes a small torch, and its beam points the way the mouse moves.
@@ -27,15 +28,24 @@ export function TorchLight() {
     let targetAngle = START_ANGLE;
     let anchor = null; // where the mouse was when its direction was last measured
     let frame = 0;
+    let lastTime = 0;
 
-    const render = () => {
+    const render = (time) => {
+      // Counted in 60 Hz frames, so the swing is just as fast on 120 Hz screens.
+      const frames = lastTime ? Math.min((time - lastTime) / (1000 / 60), 4) : 1;
+      lastTime = time;
       // Turn the shortest way round, a little each frame, so the beam swings instead of jumping.
       const remaining = ((((targetAngle - angle) % 360) + 540) % 360) - 180;
-      angle += remaining * TURN_SPEED;
+      angle += remaining * (1 - (1 - TURN_SPEED) ** frames);
       const transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
       beam.style.transform = transform;
       body.style.transform = transform;
-      frame = Math.abs(remaining) > 0.5 ? requestAnimationFrame(render) : 0;
+      if (Math.abs(remaining) > 0.5) {
+        frame = requestAnimationFrame(render);
+      } else {
+        frame = 0;
+        lastTime = 0;
+      }
     };
 
     const onMove = (event) => {
