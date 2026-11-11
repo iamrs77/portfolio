@@ -87,7 +87,7 @@ export function MobileNav({ items, email }) {
                     className="flex items-center justify-between py-4 text-2xl font-medium tracking-tight"
                   >
                     All projects
-                    <span className="font-mono text-xs text-muted">↗</span>
+                    <span className="font-mono text-xs text-muted">→</span>
                   </Link>
                 </li>
               </ul>

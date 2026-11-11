@@ -18,7 +18,7 @@ export const projects = [
     category: "frontend",
     year: 2026,
     featured: true,
-    order: 1,
+    order: 4,
     stack: ["Next.js", "React", "JavaScript", "Tailwind CSS", "Motion"],
     highlights: [
       "Adding a project means adding one entry to a data file",
@@ -89,7 +89,7 @@ export const projects = [
     category: "data",
     year: 2026,
     featured: true,
-    order: 2,
+    order: 1,
     stack: ["Python", "Streamlit", "pandas", "NumPy", "yfinance", "Alpaca API", "Finnhub API", "pytest", "GitHub Actions"],
     highlights: [
       "Every verdict comes with the reasons behind it",
@@ -185,7 +185,7 @@ export const projects = [
     category: "backend",
     year: 2024,
     featured: true,
-    order: 4,
+    order: 3,
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "JWT", "Docker", "Jest", "GitHub Actions"],
     highlights: [
       "JWT login with argon2-hashed passwords",
@@ -198,7 +198,7 @@ export const projects = [
       alt: "Swagger docs for the Bookmarks API listing the auth, users and bookmarks endpoints",
     },
     links: {
-      repo: "https://github.com/iamrs77/NestJS-API",
+      repo: "https://github.com/iamrs77/bookmarks-api",
     },
     caseStudy: {
       problem:
@@ -252,7 +252,7 @@ export const projects = [
     category: "full-stack",
     year: 2026,
     featured: true,
-    order: 3,
+    order: 2,
     stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "Tailwind CSS", "Vite", "zod", "JWT",
             "Vitest", "Docker", "GitHub Actions"],
     highlights: [

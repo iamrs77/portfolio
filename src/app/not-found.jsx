@@ -35,7 +35,7 @@ export default function NotFound() {
 
         {suggestions.length > 0 && (
           <div className="mt-20 max-w-2xl">
-            <h2 className="font-mono text-xs tracking-[0.18em] text-muted uppercase">Recent projects</h2>
+            <h2 className="font-mono text-xs tracking-[0.18em] text-muted uppercase">Projects</h2>
             <ul className="mt-4 border-t">
               {suggestions.map((project) => (
                 <li key={project.slug} className="border-b">
