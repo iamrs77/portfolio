@@ -161,37 +161,67 @@
 }
 
 /*
- * Night-mode torch (components/layout/torch-light.jsx): warm light that follows the mouse.
- * "screen" blending brightens what's underneath without washing out text.
+ * Night-mode torch (components/layout/torch-light.jsx): the mouse pointer becomes a small torch
+ * whose beam points the way the mouse moves. Both parts are placed so the lens sits on the mouse position.
+ * "screen" blending brightens what's under the beam without washing out text.
  * Shown only in the dark theme, with a mouse, and when reduced motion isn't requested.
  */
-.torch-light {
-  --torch-size: 520px;
+.torch-beam,
+.torch-body {
   position: fixed;
-  top: calc(var(--torch-size) / -2);
-  left: calc(var(--torch-size) / -2);
   z-index: 60;
   display: none;
-  width: var(--torch-size);
-  height: var(--torch-size);
-  border-radius: 50%;
-  background: radial-gradient(
-    closest-side,
-    rgb(255 226 190 / 0.3),
-    rgb(255 210 165 / 0.18) 50%,
-    rgb(255 195 145 / 0.06) 85%,
-    transparent
-  );
-  mix-blend-mode: screen;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
   will-change: transform;
 }
 
+.torch-beam {
+  /* The cone starts 24px behind the lens, inside the torch head, so it leaves the lens at full width. */
+  top: -300px;
+  left: -24px;
+  width: 780px;
+  height: 600px;
+  transform-origin: 24px 50%;
+  background:
+    radial-gradient(circle 26px at 24px 50%, rgb(255 236 205 / 0.5), transparent),
+    conic-gradient(from 73deg at 0 50%, transparent, rgb(255 226 190 / 0.32) 9deg 25deg, transparent 34deg),
+    conic-gradient(from 62deg at 0 50%, transparent, rgb(255 205 160 / 0.12) 14deg 42deg, transparent 56deg);
+  mask-image: radial-gradient(circle 760px at 0 50%, #000 12%, rgb(0 0 0 / 0.7) 45%, rgb(0 0 0 / 0.25) 75%, transparent);
+  mix-blend-mode: screen;
+}
+
+.torch-body {
+  top: -10px;
+  left: -40px;
+  z-index: 61;
+  transform-origin: 40px 10px;
+}
+
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .dark .torch-light {
+  .dark .torch-beam,
+  .dark .torch-body {
     display: block;
+  }
+
+  .dark[data-torch="on"] .torch-body {
+    opacity: 1;
+  }
+
+  .dark[data-torch="on"] .torch-beam {
+    opacity: 0.85;
+  }
+
+  /* A little brighter over links and buttons, so it's clear they can be clicked. */
+  .dark[data-torch="on"] .torch-beam.is-pointing {
+    opacity: 1;
+  }
+
+  /* The torch replaces the normal pointer. */
+  .dark[data-torch="on"],
+  .dark[data-torch="on"] * {
+    cursor: none;
   }
 }
 
