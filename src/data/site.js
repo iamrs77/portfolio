@@ -58,13 +58,13 @@ export const siteConfig = {
         years: "2016–2020",
       },
     ],
-    // Dates are "YYYY-MM". A certification past its `expires` date shows as expired the next time the site is built.
+    // Dates are "YYYY-MM", or "YYYY-MM-DD" for an exact day. From its `expires` date a certification shows as expired, even without a redeploy.
     certifications: [
       {
         name: "AWS Certified Developer – Associate",
         issuer: "Amazon Web Services",
         issued: "2023-12",
-        expires: "2026-12",
+        expires: "2026-12-11",
         url: "https://www.credly.com/badges/b8cf68c0-d934-4aeb-9c36-709c631203b0/",
         image: "/images/certifications/aws-certified-developer-associate.png",
       },

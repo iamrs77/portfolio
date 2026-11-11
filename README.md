@@ -194,7 +194,7 @@ Some names inside `src/app/` are set by Next.js and can't be changed:
 ## How it works
 
 - `lib/projects.js` checks, sorts and filters the projects once at build time, and every page reads from it.
-- Pages render on the server at build time. Only interactive parts (theme toggle, mobile menu, project filters, hero diagram, contact form, scroll animations) run in the browser.
+- Pages render on the server at build time. Only the interactive parts (theme toggle, mobile menu, project filters, hero diagram, contact form, scroll animations) and the certification expiry label run in the browser.
 - Every page is pre-rendered, and unknown project URLs return a 404.
 - The hero animation is plain CSS. Scroll animations use Motion and only move opacity and position. All animation is turned off for visitors who prefer reduced motion.
 - Pages have proper landmarks, a skip link, visible focus outlines, keyboard support and readable contrast in both themes.

@@ -12,6 +12,16 @@ export function formatYearMonth(value) {
   return label ? `${label} ${year}` : String(year);
 }
 
+/**
+ * Whether an expiry date has passed. `"2026-12-11"` expires at the start of that day (UTC).
+ * A month on its own, like `"2026-12"`, counts as valid until the end of that month.
+ */
+export function hasExpired(value) {
+  const [year, month, day] = value.split("-").map(Number);
+  const expiresAt = day ? Date.UTC(year, month - 1, day) : Date.UTC(year, month, 1);
+  return Date.now() >= expiresAt;
+}
+
 export function toParagraphs(text) {
   if (!text) return [];
   return (typeof text === "string" ? [text] : text).filter((paragraph) => paragraph.trim().length > 0);

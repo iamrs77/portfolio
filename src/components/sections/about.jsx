@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { CertificationDates } from "@/components/sections/certification-dates";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/scroll-reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { siteConfig } from "@/data/site";
 import { assetPath } from "@/lib/urls";
-import { formatYearMonth } from "@/lib/utils";
+import { hasExpired } from "@/lib/utils";
 
 function SideHeading({ children }) {
   return <h3 className="font-mono text-xs tracking-[0.18em] text-muted uppercase">{children}</h3>;
@@ -11,9 +12,6 @@ function SideHeading({ children }) {
 
 function Certification({ certification }) {
   const { name, issuer, issued, expires, url, image } = certification;
-  // Checked when the site is built, so a redeploy after the expiry date updates the label.
-  const expired = expires && new Date(`${expires}-01`) < new Date();
-  const dates = [`Issued ${formatYearMonth(issued)}`, expires && `${expired ? "Expired" : "Expires"} ${formatYearMonth(expires)}`];
 
   return (
     <div className="flex items-start gap-4">
@@ -24,7 +22,7 @@ function Certification({ certification }) {
           <span className="sr-only"> (verify on Credly, opens in a new tab)</span>
         </a>
         <p className="mt-1 text-sm leading-relaxed text-muted">{issuer}</p>
-        <p className="mt-0.5 font-mono text-xs text-muted">{dates.filter(Boolean).join(" · ")}</p>
+        <CertificationDates issued={issued} expires={expires} expiredAtBuild={Boolean(expires) && hasExpired(expires)} />
       </div>
     </div>
   );
