@@ -139,7 +139,7 @@ export const projects = [
     category: "data",
     year: 2026,
     featured: true,
-    order: 2,
+    order: 3,
     stack: ["Python", "Streamlit", "pandas", "NumPy", "yfinance", "Alpaca API", "Finnhub API", "pytest", "GitHub Actions"],
     highlights: [
       "Every verdict comes with the reasons behind it",
@@ -235,7 +235,7 @@ export const projects = [
     category: "full-stack",
     year: 2026,
     featured: true,
-    order: 3,
+    order: 2,
     stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "Tailwind CSS", "Vite", "zod", "JWT",
             "Vitest", "Docker", "GitHub Actions"],
     highlights: [
