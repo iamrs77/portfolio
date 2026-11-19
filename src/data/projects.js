@@ -7,6 +7,126 @@
  */
 export const projects = [
   {
+    slug: "stockroom",
+    title: "Stockroom",
+    summary:
+      "Inventory for small retailers: stock across stores, transfers, a full ledger, low-stock webhooks and 100,000-row background imports. Built to stay correct under concurrency and failure, and deployed for free.",
+    description: [
+      "A multi-tenant inventory app built to show system design in a working product. Every stock change is an append-only ledger entry, written in the same transaction as the balance. A database constraint makes overselling impossible, and idempotency keys make retries safe.",
+      "Spreadsheet imports of up to 100,000 rows run in the background on BullMQ: they resume after a crash, report bad rows, and stream live progress. Low-stock alerts and transfer events leave through a transactional outbox as signed webhooks. It's load-tested, written up in decision records, and live on free plans, where each visitor gets a private demo business for 24 hours.",
+    ],
+    category: "full-stack",
+    year: 2026,
+    featured: true,
+    order: 1,
+    stack: [
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Redis",
+      "BullMQ",
+      "React",
+      "TanStack Query",
+      "Tailwind CSS",
+      "Drizzle ORM",
+      "Vitest",
+      "GitHub Actions",
+    ],
+    highlights: [
+      "Imports resume after a hard kill mid-file, and their stock changes still match the ledger exactly",
+      "Product list made 275× faster at 100,000 products, measured with load tests and query plans",
+      "Live on free plans, with the hosting budgets worked out and written down",
+    ],
+    tags: ["system-design", "postgresql", "bullmq", "redis", "multi-tenant", "webhooks"],
+    cover: {
+      src: "/images/projects/stockroom/cover.png",
+      alt: "Stockroom's product list in a visitor's demo business, with search, a low-stock filter, low-stock badges and the demo banner",
+    },
+    links: {
+      repo: "https://github.com/iamrs77/stockroom",
+      live: "https://stockroom-5x6w.onrender.com",
+    },
+    caseStudy: {
+      problem:
+        "Small retailers juggle stock across a few stores in spreadsheets, and spreadsheets don't stop two people selling the last unit, or a re-sent request counting stock twice. I wanted to build the inventory system a small chain actually needs, and to make the hard parts (concurrency, retries, bulk work and failure) correct and provable rather than hopeful.",
+      goals: [
+        "Stock that can't go negative or drift, whatever happens at once",
+        "Bulk imports that survive crashes and restarts without double-counting",
+        "Events and webhooks that can't be lost or sent for changes that didn't happen",
+        "Fast at 100,000 products, proven with load tests",
+        "A live demo that costs nothing to run",
+      ],
+      architecture: [
+        {
+          title: "Stock ledger",
+          description:
+            "Every change is an append-only movement written in the same transaction as the balance. A CHECK constraint is what stops overselling: 12 simultaneous sales against 5 units give exactly 5 successes. All writers lock rows in one global order, so nothing can deadlock.",
+        },
+        {
+          title: "Background imports",
+          description:
+            "Postgres records each import; BullMQ on Redis only delivers the work, and a sweeper repairs anything the queue loses. Each 1,000-row chunk commits together with its checkpoint, which also acts as a fencing token, so two workers can never apply the same chunk.",
+        },
+        {
+          title: "Transactional outbox",
+          description:
+            "Alerts and transfer events are written in the same transaction as the change. A relay hands batches to workers with FOR UPDATE SKIP LOCKED, and they're delivered as HMAC-signed webhooks with retries, protected against server-side request forgery.",
+        },
+        {
+          title: "One service, free plans",
+          description:
+            "The API, web app and workers run as one Node service on Render, with Neon Postgres and Upstash Redis. The same code can split into separate API and worker processes with one setting.",
+        },
+      ],
+      challenges: [
+        {
+          challenge: "Proving a crash can't corrupt an import",
+          solution:
+            "I hard-killed the server at 32% of a 100,000-row import. After a restart it resumed from its checkpoint, and its 197,463 stock changes matched the ledger exactly, with nothing applied twice.",
+        },
+        {
+          challenge: "A race the tests weren't catching",
+          solution:
+            "The first concurrency test passed even with the product lock removed, because the requests never overlapped. A barrier inside the transaction now forces the race: the test passes with the lock and fails every time without it.",
+        },
+        {
+          challenge: "A slow product list at 100,000 products",
+          solution:
+            "Load tests and query plans led to stock totals kept by triggers, keyset paging, capped counts and trigram search. The low-stock filter went from 1.6 s to 6 ms. The costs (imports 46% slower) are measured and written down too.",
+        },
+        {
+          challenge: "Free plans that count everything",
+          solution:
+            "Idle queue workers would have used Upstash's whole monthly command quota in a week. Tuned polling and timers keep the worst case within the free limits, and each visitor gets a sandbox business deleted after a day, so the database can't fill up.",
+        },
+      ],
+      gallery: [
+        {
+          src: "/images/projects/stockroom/import-progress.png",
+          alt: "A 30,000-row import in progress at 16%, with live counts of new products, updates, stock changes and skipped rows",
+          caption: "Imports run in the background with live progress.",
+          width: 1280,
+          height: 900,
+        },
+        {
+          src: "/images/projects/stockroom/transfer.png",
+          alt: "Transfer TR-0001 from Queen Street West to Kensington Market, received with one mug recorded as short",
+          caption: "Transfers record what actually arrived.",
+          width: 1280,
+          height: 900,
+        },
+        {
+          src: "/images/projects/stockroom/product-detail.png",
+          alt: "A product's stock in three stores next to its history of received stock, each entry with its running balance",
+          caption: "Every stock change is in the ledger, with the balance after it.",
+          width: 1280,
+          height: 860,
+        },
+      ],
+    },
+  },
+  {
     slug: "developer-portfolio",
     title: "Portfolio Website",
     summary:
@@ -18,7 +138,7 @@ export const projects = [
     category: "frontend",
     year: 2026,
     featured: true,
-    order: 4,
+    order: 5,
     stack: ["Next.js", "React", "JavaScript", "Tailwind CSS", "Motion"],
     highlights: [
       "Adding a project means adding one entry to a data file",
@@ -89,7 +209,7 @@ export const projects = [
     category: "data",
     year: 2026,
     featured: true,
-    order: 1,
+    order: 2,
     stack: ["Python", "Streamlit", "pandas", "NumPy", "yfinance", "Alpaca API", "Finnhub API", "pytest", "GitHub Actions"],
     highlights: [
       "Every verdict comes with the reasons behind it",
@@ -185,7 +305,7 @@ export const projects = [
     category: "backend",
     year: 2024,
     featured: true,
-    order: 3,
+    order: 4,
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "JWT", "Docker", "Jest", "GitHub Actions"],
     highlights: [
       "JWT login with argon2-hashed passwords",
@@ -252,7 +372,7 @@ export const projects = [
     category: "full-stack",
     year: 2026,
     featured: true,
-    order: 2,
+    order: 3,
     stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "Tailwind CSS", "Vite", "zod", "JWT",
             "Vitest", "Docker", "GitHub Actions"],
     highlights: [
