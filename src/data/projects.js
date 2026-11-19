@@ -10,10 +10,10 @@ export const projects = [
     slug: "stockroom",
     title: "Stockroom",
     summary:
-      "Inventory for small retailers: stock across stores, transfers, a full ledger, low-stock webhooks and 100,000-row background imports. Built to stay correct under concurrency and failure, and deployed for free.",
+      "An inventory app for shops with more than one store. It tracks stock in every store, moves stock between stores, and imports spreadsheets of up to 100,000 rows in the background.",
     description: [
-      "A multi-tenant inventory app built to show system design in a working product. Every stock change is an append-only ledger entry, written in the same transaction as the balance. A database constraint makes overselling impossible, and idempotency keys make retries safe.",
-      "Spreadsheet imports of up to 100,000 rows run in the background on BullMQ: they resume after a crash, report bad rows, and stream live progress. Low-stock alerts and transfer events leave through a transactional outbox as signed webhooks. It's load-tested, written up in decision records, and live on free plans, where each visitor gets a private demo business for 24 hours.",
+      "Stockroom helps a small chain of shops keep track of its stock. Owners add products, see how many are in each store, send stock from one store to another, and see what's running low. Every change is saved in a history, with who made it and when.",
+      "I built it to show how I design back-end systems. Stock numbers stay right even when many people use the app at once, big imports carry on after a crash, and nothing is counted twice. It's live on free hosting, and anyone can try it with their own sample business.",
     ],
     category: "full-stack",
     year: 2026,
@@ -34,14 +34,15 @@ export const projects = [
       "GitHub Actions",
     ],
     highlights: [
-      "Imports resume after a hard kill mid-file, and their stock changes still match the ledger exactly",
-      "Product list made 275× faster at 100,000 products, measured with load tests and query plans",
-      "Live on free plans, with the hosting budgets worked out and written down",
+      "Stock can never go below zero, even when several sales happen at the same moment",
+      "Big imports continue from where they stopped after a crash, without counting anything twice",
+      "Tested with 100,000 products and made up to 275× faster",
+      "Free to host, and every visitor gets a private demo business to try",
     ],
     tags: ["system-design", "postgresql", "bullmq", "redis", "multi-tenant", "webhooks"],
     cover: {
-      src: "/images/projects/stockroom/cover.png",
-      alt: "Stockroom's product list in a visitor's demo business, with search, a low-stock filter, low-stock badges and the demo banner",
+      src: "/images/projects/stockroom/products-list.png",
+      alt: "Stockroom's product list, with search, a low-stock filter and low-stock badges",
     },
     links: {
       repo: "https://github.com/iamrs77/stockroom",
@@ -49,79 +50,79 @@ export const projects = [
     },
     caseStudy: {
       problem:
-        "Small retailers juggle stock across a few stores in spreadsheets, and spreadsheets don't stop two people selling the last unit, or a re-sent request counting stock twice. I wanted to build the inventory system a small chain actually needs, and to make the hard parts (concurrency, retries, bulk work and failure) correct and provable rather than hopeful.",
+        "Small shops with a few stores often keep track of stock in spreadsheets, and spreadsheets break easily. Two people can sell the last item at the same time, it's hard to see who changed what, and a big update can stop halfway. I wanted to build a simple inventory app that handles these problems properly, and prove it with tests.",
       goals: [
-        "Stock that can't go negative or drift, whatever happens at once",
-        "Bulk imports that survive crashes and restarts without double-counting",
-        "Events and webhooks that can't be lost or sent for changes that didn't happen",
-        "Fast at 100,000 products, proven with load tests",
-        "A live demo that costs nothing to run",
+        "Stock numbers that are always right, even when many things happen at once",
+        "Big imports that survive a crash without counting anything twice",
+        "Alerts that are never lost and never sent by mistake",
+        "Fast, even with 100,000 products",
+        "Free to host and free to try",
       ],
       architecture: [
         {
-          title: "Stock ledger",
+          title: "Stock history",
           description:
-            "Every change is an append-only movement written in the same transaction as the balance. A CHECK constraint is what stops overselling: 12 simultaneous sales against 5 units give exactly 5 successes. All writers lock rows in one global order, so nothing can deadlock.",
+            "Every stock change is saved as a new history entry together with the new total, in a single step: either both are saved or neither is. The database refuses any change that would take stock below zero. In a test, 12 sales arrive at the same moment for an item with only 5 in stock, and exactly 5 go through.",
         },
         {
           title: "Background imports",
           description:
-            "Postgres records each import; BullMQ on Redis only delivers the work, and a sweeper repairs anything the queue loses. Each 1,000-row chunk commits together with its checkpoint, which also acts as a fencing token, so two workers can never apply the same chunk.",
+            "Uploaded spreadsheets are processed in the background in blocks of 1,000 rows, using a job queue (BullMQ on Redis). After each block, the app saves how far it got, so after a crash the import continues from that point. If the queue loses a job, a regular check finds it and starts it again.",
         },
         {
-          title: "Transactional outbox",
+          title: "Reliable alerts",
           description:
-            "Alerts and transfer events are written in the same transaction as the change. A relay hands batches to workers with FOR UPDATE SKIP LOCKED, and they're delivered as HMAC-signed webhooks with retries, protected against server-side request forgery.",
+            "Low-stock alerts and transfer updates are saved in the same step as the change that caused them, then sent to the business's own systems as webhooks. Each message is signed so the receiver can check it's genuine, and failed sends are retried.",
         },
         {
-          title: "One service, free plans",
+          title: "One small server",
           description:
-            "The API, web app and workers run as one Node service on Render, with Neon Postgres and Upstash Redis. The same code can split into separate API and worker processes with one setting.",
+            "The website, the API and the background workers run together as one Node.js app on Render's free plan, with free PostgreSQL from Neon and free Redis from Upstash. Changing one setting splits them into separate servers when more capacity is needed.",
         },
       ],
       challenges: [
         {
-          challenge: "Proving a crash can't corrupt an import",
+          challenge: "Making sure a crash can't break an import",
           solution:
-            "I hard-killed the server at 32% of a 100,000-row import. After a restart it resumed from its checkpoint, and its 197,463 stock changes matched the ledger exactly, with nothing applied twice.",
+            "I stopped the server suddenly in the middle of a 100,000-row import. After a restart, the import carried on from where it stopped. All 197,463 stock changes were correct, and none were applied twice.",
         },
         {
-          challenge: "A race the tests weren't catching",
+          challenge: "A test that couldn't catch the bug",
           solution:
-            "The first concurrency test passed even with the product lock removed, because the requests never overlapped. A barrier inside the transaction now forces the race: the test passes with the lock and fails every time without it.",
+            "My first test for two sales at the same moment passed even with the safety lock removed, because the two sales never actually overlapped. I changed the test to hold both sales open at the same time. Now it fails without the lock and passes with it.",
         },
         {
-          challenge: "A slow product list at 100,000 products",
+          challenge: "A slow product list",
           solution:
-            "Load tests and query plans led to stock totals kept by triggers, keyset paging, capped counts and trigram search. The low-stock filter went from 1.6 s to 6 ms. The costs (imports 46% slower) are measured and written down too.",
+            "With 100,000 products, showing only low-stock items took 1.6 seconds. Load tests showed where the time went, and I fixed it step by step: keeping each product's total stock ready instead of adding it up every time, faster paging and a better search index. It now takes 6 ms. The trade-off is that imports are 46% slower, which I measured and wrote down.",
         },
         {
-          challenge: "Free plans that count everything",
+          challenge: "Staying within free limits",
           solution:
-            "Idle queue workers would have used Upstash's whole monthly command quota in a week. Tuned polling and timers keep the worst case within the free limits, and each visitor gets a sandbox business deleted after a day, so the database can't fill up.",
+            "The free Redis plan allows a fixed number of commands a month, and the job queue's default settings would have used them all in about a week. I made the background checks run less often so the app stays within the limit. Each visitor's demo business is deleted after 24 hours, so the free database never fills up.",
         },
       ],
       gallery: [
         {
-          src: "/images/projects/stockroom/import-progress.png",
-          alt: "A 30,000-row import in progress at 16%, with live counts of new products, updates, stock changes and skipped rows",
-          caption: "Imports run in the background with live progress.",
-          width: 1280,
-          height: 900,
+          src: "/images/projects/stockroom/import-in-progress.png",
+          alt: "A 30,000-row import 30% done, with live counts of new products, stock changes and skipped rows",
+          caption: "Big imports run in the background and show their progress live.",
+          width: 2200,
+          height: 1134,
         },
         {
-          src: "/images/projects/stockroom/transfer.png",
-          alt: "Transfer TR-0001 from Queen Street West to Kensington Market, received with one mug recorded as short",
-          caption: "Transfers record what actually arrived.",
-          width: 1280,
-          height: 900,
+          src: "/images/projects/stockroom/transfer-received.png",
+          alt: "Transfer TR-0001 from Queen Street West to Kensington Market, received with one mug short",
+          caption: "A transfer between two stores. The receiving store records what actually arrived.",
+          width: 2200,
+          height: 914,
         },
         {
-          src: "/images/projects/stockroom/product-detail.png",
-          alt: "A product's stock in three stores next to its history of received stock, each entry with its running balance",
-          caption: "Every stock change is in the ledger, with the balance after it.",
-          width: 1280,
-          height: 860,
+          src: "/images/projects/stockroom/product-history.png",
+          alt: "A mug's stock in three stores, next to its history of opening stock and a transfer, each entry with the new total",
+          caption: "Every change to a product's stock is kept in its history.",
+          width: 2200,
+          height: 1432,
         },
       ],
     },
