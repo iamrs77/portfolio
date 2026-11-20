@@ -365,7 +365,7 @@ export const projects = [
     slug: "interview-ready",
     title: "Interview Ready",
     summary:
-      "A study site for system design interviews: 122 short lessons in simple English, 300 architecture diagrams and 1,415 flashcards that come back just before you forget them.",
+      "A study site for system design interviews: 126 short lessons in simple English, 312 architecture diagrams and 774 flashcards that come back just before you forget them.",
     description: [
       "Interview Ready is where I prepare for system design interviews. Ten modules go from the basics, like DNS and HTTP, through databases, caching, messaging and distributed systems, to 20 full interview questions such as WhatsApp, Uber and a payment system. Every lesson starts with an everyday comparison, shows the design in a diagram, and ends with what to say in the interview.",
       "I wanted one free place to open and prepare, without jumping between books, blogs and courses. It's a static Next.js site on Vercel's free plan with no accounts: lesson and flashcard progress are saved in the browser.",
@@ -376,9 +376,9 @@ export const projects = [
     order: 4,
     stack: ["Next.js", "React", "TypeScript", "Fumadocs", "MDX", "Mermaid", "Tailwind CSS", "Vercel"],
     highlights: [
-      "122 lessons in 10 modules, from DNS to designing Google Docs",
-      "1,415 flashcards that come back after 1, 3, 7, 14, then 30 days",
-      "300 architecture diagrams, every one checked in a real browser",
+      "126 lessons in 10 modules, from DNS to designing Google Docs",
+      "774 flashcards that come back after 1, 3, 7, 14, then 30 days",
+      "312 architecture diagrams, every one checked in a real browser",
     ],
     tags: ["system-design", "nextjs", "mdx", "mermaid", "flashcards", "spaced-repetition", "learning"],
     cover: {
@@ -408,12 +408,12 @@ export const projects = [
         {
           title: "Diagrams written as text",
           description:
-            "All 300 diagrams are written in Mermaid, next to the lesson, so they're easy to change. Each kind of part has its own soft color on every page: users blue, servers indigo, databases amber, caches rose, queues teal. Any diagram opens large with one click, and on phones wide diagrams scroll sideways instead of shrinking.",
+            "All 312 diagrams are written in Mermaid, next to the lesson, so they're easy to change. Each kind of part has its own soft color on every page: users blue, servers indigo, databases amber, caches rose, queues teal. Any diagram opens large with one click, and on phones wide diagrams scroll sideways instead of shrinking.",
         },
         {
           title: "Flashcards that come back",
           description:
-            "1,415 cards in 11 decks, one per module, each linked to the lesson it came from. A card I know moves up a box and comes back after 1, 3, 7, 14, then 30 days. A card I miss goes back to the start and comes back in the same session.",
+            "774 cards in 11 decks, one per module, each linked to the lesson it came from. A card I know moves up a box and comes back after 1, 3, 7, 14, then 30 days. A card I miss goes back to the start and comes back in the same session.",
         },
         {
           title: "Progress without an account",
@@ -423,7 +423,7 @@ export const projects = [
       ],
       challenges: [
         {
-          challenge: "Finding mistakes in 122 lessons",
+          challenge: "Finding mistakes in 126 lessons",
           solution:
             "A line-by-line review found about 30 real mistakes, like a retry rule that could charge a card twice, live video listed as using UDP, and a location search that missed drivers 2 km away. I fixed every one and checked every page again.",
         },
@@ -463,7 +463,7 @@ export const projects = [
       ],
       outcomes: [
         "Live on Vercel's free plan, and every push to GitHub redeploys it",
-        "122 lessons, 300 diagrams and 1,415 flashcards, with a check that every card links to a real lesson",
+        "126 lessons, 312 diagrams and 774 flashcards, with a check that every card links to a real lesson",
       ],
     },
   },
