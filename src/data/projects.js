@@ -361,4 +361,110 @@ export const projects = [
       ],
     },
   },
+  {
+    slug: "interview-ready",
+    title: "Interview Ready",
+    summary:
+      "A study site for system design interviews: 122 short lessons in simple English, 300 architecture diagrams and 1,415 flashcards that come back just before you forget them.",
+    description: [
+      "Interview Ready is where I prepare for system design interviews. Ten modules go from the basics, like DNS and HTTP, through databases, caching, messaging and distributed systems, to 20 full interview questions such as WhatsApp, Uber and a payment system. Every lesson starts with an everyday comparison, shows the design in a diagram, and ends with what to say in the interview.",
+      "I wanted one free place to open and prepare, without jumping between books, blogs and courses. It's a static Next.js site on Vercel's free plan with no accounts: lesson and flashcard progress are saved in the browser.",
+    ],
+    category: "frontend",
+    year: 2026,
+    featured: true,
+    order: 4,
+    stack: ["Next.js", "React", "TypeScript", "Fumadocs", "MDX", "Mermaid", "Tailwind CSS", "Vercel"],
+    highlights: [
+      "122 lessons in 10 modules, from DNS to designing Google Docs",
+      "1,415 flashcards that come back after 1, 3, 7, 14, then 30 days",
+      "300 architecture diagrams, every one checked in a real browser",
+    ],
+    tags: ["system-design", "nextjs", "mdx", "mermaid", "flashcards", "spaced-repetition", "learning"],
+    cover: {
+      src: "/images/projects/interview-ready/cover.webp",
+      alt: "A lesson on scaling reads with a colored diagram of a CDN, load balancer, app servers, Redis cache and database replicas, next to a sidebar with finished lessons ticked",
+    },
+    links: {
+      repo: "https://github.com/iamrs77/interview-ready",
+      live: "https://interview-ready-two.vercel.app",
+    },
+    caseStudy: {
+      problem:
+        "Preparing for system design interviews means jumping between books, engineering blogs and paid courses, and much of it is dense. I wanted one free place to open and study: short lessons in simple English, clear diagrams, real examples, and a way to keep what I learn.",
+      goals: [
+        "Everything for system design interviews in one place",
+        "Simple English, with an everyday comparison for every idea",
+        "Clear diagrams that use the same colors on every page",
+        "Flashcards that bring each idea back before it's forgotten",
+        "Free to host, with no login",
+      ],
+      architecture: [
+        {
+          title: "Lessons are files",
+          description:
+            "Each lesson is an MDX file: Markdown with a few components like callouts, tabs and fold-out answers. Small JSON files set the order of the sidebar. Every page is built ahead of time, so the whole site is static and loads fast from Vercel's free plan.",
+        },
+        {
+          title: "Diagrams written as text",
+          description:
+            "All 300 diagrams are written in Mermaid, next to the lesson, so they're easy to change. Each kind of part has its own soft color on every page: users blue, servers indigo, databases amber, caches rose, queues teal. Any diagram opens large with one click, and on phones wide diagrams scroll sideways instead of shrinking.",
+        },
+        {
+          title: "Flashcards that come back",
+          description:
+            "1,415 cards in 11 decks, one per module, each linked to the lesson it came from. A card I know moves up a box and comes back after 1, 3, 7, 14, then 30 days. A card I miss goes back to the start and comes back in the same session.",
+        },
+        {
+          title: "Progress without an account",
+          description:
+            "Finished lessons get a green tick in the sidebar, and the home page shows how far I've got. Lesson and flashcard progress are saved in the browser, so there's no server, no login and nothing to pay for.",
+        },
+      ],
+      challenges: [
+        {
+          challenge: "Finding mistakes in 122 lessons",
+          solution:
+            "A line-by-line review found about 30 real mistakes, like a retry rule that could charge a card twice, live video listed as using UDP, and a location search that missed drivers 2 km away. I fixed every one and checked every page again.",
+        },
+        {
+          challenge: "A check that passed broken diagrams",
+          solution:
+            "A script opens every page in a headless browser and compares the diagrams drawn with the diagrams in the lesson. A broken Mermaid diagram still draws a picture, an error picture, so the first version passed broken pages. It now counts those as failures.",
+        },
+        {
+          challenge: "Diagrams too small to read",
+          solution:
+            "Wide diagrams shrank until the text was unreadable, and opening them large didn't help: Mermaid writes a fixed width on each diagram, and that beats CSS. The large view now removes it, and on phones a diagram never shrinks below 70% of its real size.",
+        },
+      ],
+      gallery: [
+        {
+          src: "/images/projects/interview-ready/deep-dive.webp",
+          alt: "The URL shortener question comparing three ways to make short codes unique, marked Not great, Okay and Best",
+          caption: "Each interview question compares weak and strong answers, and says why.",
+          width: 2560,
+          height: 1640,
+        },
+        {
+          src: "/images/projects/interview-ready/flashcard.webp",
+          alt: "A flashcard asking What is DNS?, with the answer shown and Again and I knew it buttons",
+          caption: "Click a card to see the answer, then mark Again or I knew it.",
+          width: 2560,
+          height: 1640,
+        },
+        {
+          src: "/images/projects/interview-ready/decks.webp",
+          alt: "The flashcard decks, one per module, each with its card counts and a progress bar",
+          caption: "One deck per module, with progress saved in the browser.",
+          width: 2560,
+          height: 1640,
+        },
+      ],
+      outcomes: [
+        "Live on Vercel's free plan, and every push to GitHub redeploys it",
+        "122 lessons, 300 diagrams and 1,415 flashcards, with a check that every card links to a real lesson",
+      ],
+    },
+  },
 ];
