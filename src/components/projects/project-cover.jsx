@@ -6,10 +6,11 @@ import { cn } from "@/lib/utils";
 /**
  * The project image, or a generated typographic cover when the project has none.
  * `sizes` is the responsive hint that lets the browser download an appropriately sized image.
+ * `aspect` sets the shape: the case study keeps the tall 16:10, the project cards use a shorter one.
  */
-export function ProjectCover({ project, sizes, preload = false, className }) {
+export function ProjectCover({ project, sizes, preload = false, aspect = "aspect-[16/10]", className }) {
   return (
-    <div className={cn("relative aspect-[16/10] overflow-hidden rounded-xl border bg-surface-muted", className)}>
+    <div className={cn("relative overflow-hidden rounded-xl border bg-surface-muted", aspect, className)}>
       {project.cover ? (
         <Image
           src={assetPath(project.cover.src)}
@@ -17,7 +18,7 @@ export function ProjectCover({ project, sizes, preload = false, className }) {
           fill
           sizes={sizes}
           preload={preload}
-          className="object-cover transition-transform duration-700 ease-out-expo motion-safe:group-hover:scale-[1.03]"
+          className="object-cover object-top transition-transform duration-700 ease-out-expo motion-safe:group-hover:scale-[1.03]"
         />
       ) : (
         <CoverFallback title={project.title} category={PROJECT_CATEGORIES[project.category]} />

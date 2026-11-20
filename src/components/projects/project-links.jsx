@@ -3,10 +3,38 @@ import { FaGithub } from "react-icons/fa6";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-/** Repository and live links. `variant="icon"`: compact buttons for cards. `"button"`: labelled buttons for the detail page. */
+/**
+ * Repository and live links.
+ * `variant="card"`: small labelled buttons for project cards. `"icon"`: icon-only buttons.
+ * `"button"`: large labelled buttons for the detail page.
+ */
 export function ProjectLinks({ project, variant = "button", className }) {
   const { live, repo } = project.links ?? {};
   if (!live && !repo) return null;
+
+  if (variant === "card") {
+    return (
+      <div className={cn("flex flex-wrap items-center gap-2", className)}>
+        {live && (
+          <ButtonLink href={live} size="sm">
+            Live demo
+            <ArrowUpRight
+              aria-hidden="true"
+              className="size-3.5 transition-transform duration-300 group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5"
+            />
+            <span className="sr-only">: {project.title} (opens in a new tab)</span>
+          </ButtonLink>
+        )}
+        {repo && (
+          <ButtonLink href={repo} size="sm" variant={live ? "secondary" : "primary"}>
+            <FaGithub aria-hidden="true" className="size-3.5" />
+            GitHub
+            <span className="sr-only">: {project.title} source code (opens in a new tab)</span>
+          </ButtonLink>
+        )}
+      </div>
+    );
+  }
 
   if (variant === "icon") {
     const iconLink =
