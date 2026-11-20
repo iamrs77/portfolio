@@ -227,102 +227,137 @@ export const projects = [
     slug: "foodiez",
     title: "Foodiez",
     summary:
-      "A food ordering web app: customers order from local restaurants, and vendors manage their own menus. React, Node.js and MongoDB, with tests, Docker and CI.",
+      "A food ordering app where customers order from local restaurants and track their order, and restaurants accept, prepare and deliver it. Live, with a private demo for every visitor.",
     description: [
-      "Customers browse and search restaurants, build a cart from one restaurant and place orders. Vendors add restaurants and manage dishes, and can only change their own. Demo accounts are built in, so the app is ready to try as soon as it starts.",
-      "I first built it in 2021 as an Express API and four versions of the same React app. In 2026 I merged the API and the Tailwind version into one repo and rebuilt both, fixing security problems and adding tests, Docker and CI.",
+      "Customers find restaurants by name, cuisine or area, read menus with photos, order from one restaurant at a time, and watch their order go from accepted to delivered. Restaurant owners manage their menus, mark dishes sold out, and handle new orders as they arrive.",
+      "I first built it in 2021 and rebuilt it in 2026, fixing security problems and adding tests. Then I made it a complete two-sided app: orders that reach the restaurant, a checkout that can't place the same order twice, and a live demo where every visitor gets their own copy of the restaurants, as the customer and as the restaurant owner.",
     ],
     category: "full-stack",
     year: 2026,
     featured: true,
     order: 2,
-    stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "Tailwind CSS", "Vite", "zod", "JWT",
-            "Vitest", "Docker", "GitHub Actions"],
-    highlights: [
-      "Vendors can only change their own restaurants, checked by the API on every request",
-      "Orders keep the price that was paid, even after a menu changes",
-      "60 tests, plus a CI check that the Docker setup starts",
+    stack: [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Redux Toolkit",
+      "Tailwind CSS",
+      "Vite",
+      "zod",
+      "Vitest",
+      "Playwright",
+      "OpenAPI",
+      "Docker",
+      "GitHub Actions",
     ],
-    tags: ["react", "nodejs", "express", "mongodb", "food-ordering"],
+    highlights: [
+      "Every visitor gets a private demo, as both the customer and the restaurant, deleted after 24 hours",
+      "An order can't be placed twice, even from two tabs at the same moment",
+      "138 automated tests, including a real browser clicking through whole orders",
+      "Free to host, as one small server with a free database",
+    ],
+    tags: ["react", "nodejs", "express", "mongodb", "food-ordering", "transactions", "playwright", "openapi"],
     cover: {
-      src: "/images/projects/foodiez/cover.png",
-      alt: "Foodiez home page with a restaurant search box and cards for Spice Route, Napoli Slice and Dosa Corner",
+      src: "/images/projects/foodiez/cover.webp",
+      alt: "Foodiez home page with restaurant photos, cuisine filters, a pure veg filter and the Try the demo card",
     },
     links: {
       repo: "https://github.com/iamrs77/foodiez",
+      live: "https://foodiez-izdk.onrender.com",
     },
     caseStudy: {
       problem:
-        "The 2021 version worked, but it had real security holes: anyone could sign up as an admin, and any vendor could edit any restaurant. Its request handling crashed easily, and it had no real order history. The rebuild set out to fix all of that.",
+        "The 2021 version had security holes, and an order stopped at placed: the restaurant never saw it. I wanted a food ordering app that works from start to finish for both sides, stays correct when two things happen at the same moment, and that anyone can try online without spoiling it for others.",
       goals: [
-        "Browse, fill a cart and order without friction",
-        "Vendors manage their own restaurants and menus, and nothing else",
-        "Safe by default: checked input, hashed passwords and rate-limited logins",
-        "Run the whole app with one command",
+        "Orders that reach the restaurant, and customers who can follow them",
+        "No order placed twice, and no two updates fighting over one order",
+        "A public demo strangers can use without affecting anyone else",
+        "Clear menus and fast search",
+        "Free to host",
       ],
       architecture: [
         {
-          title: "React web app",
+          title: "Checkout in one step",
           description:
-            "React 19 with Vite, React Router and Tailwind CSS. Every API call goes through Redux Toolkit's RTK Query, so loading, caching and errors are handled in one place.",
+            "Placing an order creates it and empties the cart in a single database transaction: either both happen or neither does. A retried request carries the same key and gets the first order back instead of a second one. In a test, three checkouts of one cart arrive at once and exactly one order is created.",
         },
         {
-          title: "Express API",
+          title: "Orders that move along",
           description:
-            "Express 5 with Mongoose. zod checks every request body, and roles and ownership are checked on the server, not just hidden in the interface.",
+            "The restaurant moves an order from placed to accepted, preparing, out for delivery and delivered. A change only applies if nobody changed the order first, so the restaurant accepting at the same moment the customer cancels can't both win. The restaurant's orders and the customer's tracking page update by themselves.",
         },
         {
-          title: "One-command setup",
+          title: "A private demo for every visitor",
           description:
-            "Docker Compose runs MongoDB, the API and nginx serving the web app. The quick start runs the API with an in-memory database filled with demo data.",
+            "Each visitor gets their own copy of the restaurants, menus and orders, and can switch between the customer and the restaurant owner. Every record knows which copy it belongs to, the API only ever shows a visitor their own, and the database deletes each copy by itself after 24 hours.",
+        },
+        {
+          title: "Fast search",
+          description:
+            "Each restaurant keeps the words of its name, cuisine and area, and search matches the start of those words using a database index, instead of reading every restaurant. A test checks the database really uses the index.",
+        },
+        {
+          title: "One small server, documented",
+          description:
+            "The API also serves the website, so it all runs as one free Render service with a free MongoDB Atlas database. The API is described in OpenAPI, readable at /api/docs, and a test checks the real answers against that description.",
         },
       ],
       challenges: [
         {
-          challenge: "Permissions only enforced in the browser",
+          challenge: "Shared demo accounts on a public site",
           solution:
-            "The API now checks who you are and what you own on every request. Tests confirm a vendor can't change another vendor's restaurant and a customer can't touch someone else's cart.",
+            "With one shared demo login, anyone could rename or delete the restaurants everyone else sees. I gave each visitor a private copy instead, and tested two visitors side by side to prove neither sees the other's changes.",
         },
         {
-          challenge: "Old orders changing with the menu",
+          challenge: "Proving the test could catch the bug",
           solution:
-            "Each order stores a copy of its dishes and prices, so editing or deleting a dish later doesn't change what a customer paid.",
+            "A test for two orders at once proves nothing if they never actually overlap. I ran it with the transaction turned off: it created three orders. With the transaction, one. So the test would catch the bug if it ever came back.",
         },
         {
-          challenge: "Revealing who has an account",
+          challenge: "A bug only a slower computer found",
           solution:
-            "A wrong email and a wrong password give the same error, and login attempts are rate limited.",
+            "A browser test passed on my machine but failed on the build server. The bug was real: turning a filter off and typing straight away put the filter back on. A small test now reproduces it, and each change builds on the latest filters.",
+        },
+        {
+          challenge: "Testing the live site, not just my computer",
+          solution:
+            "After deploying, I ran the browser tests against the live site. The app was fine, but one test clicked before switching demo accounts had finished, which is instant locally but takes a moment online. The tests now wait, and all of them pass against the live site.",
         },
       ],
       gallery: [
         {
-          src: "/images/projects/foodiez/menu.png",
-          alt: "Spice Route's menu with veg and non-veg dishes, quantity controls and a cart summary bar",
-          caption: "A restaurant menu, with the cart summary at the bottom.",
-          width: 1280,
-          height: 860,
+          src: "/images/projects/foodiez/menu.webp",
+          alt: "Burger Barn's menu, grouped into Burgers, Sides and Shakes, with dish photos and a sold out chocolate shake",
+          caption: "Menus are grouped into the restaurant's own sections. Sold out dishes stay visible but can't be ordered.",
+          width: 2560,
+          height: 1640,
         },
         {
-          src: "/images/projects/foodiez/cart.png",
-          alt: "Cart with Paneer Butter Masala and Garlic Naan from Spice Route, quantity controls and bill details",
-          caption: "The cart. One order comes from one restaurant, like real delivery apps.",
-          width: 1280,
-          height: 860,
+          src: "/images/projects/foodiez/checkout.webp",
+          alt: "A cart from Dosa Corner with the bill and a delivery form filled in from the last order",
+          caption: "Checkout fills in the address from the last order.",
+          width: 2560,
+          height: 1640,
         },
         {
-          src: "/images/projects/foodiez/orders.png",
-          alt: "Order history after placing an order, listing each order's dishes, prices and total",
-          caption: "Order history keeps the price that was actually paid.",
-          width: 1280,
-          height: 860,
+          src: "/images/projects/foodiez/restaurant-orders.webp",
+          alt: "The restaurant's orders: a new order with Accept and Reject buttons, and one being prepared",
+          caption: "The restaurant sees new orders as they arrive and moves each one to its next step.",
+          width: 2560,
+          height: 1640,
         },
         {
-          src: "/images/projects/foodiez/vendor-restaurants.png",
-          alt: "Vendor's My restaurants page with three restaurant cards and an Add restaurant button",
-          caption: "Vendors see and manage only their own restaurants.",
-          width: 1280,
-          height: 860,
+          src: "/images/projects/foodiez/tracking.webp",
+          alt: "An order from Dosa Corner showing placed, accepted and being prepared, with the times of each step",
+          caption: "The customer watches the order move along, on a page that updates by itself.",
+          width: 2560,
+          height: 1640,
         },
+      ],
+      outcomes: [
+        "Live on free hosting, with a private demo for every visitor",
+        "138 automated tests: 88 for the API, 45 for the web app and 5 in a real browser, run on every change",
       ],
     },
   },
