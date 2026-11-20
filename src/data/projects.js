@@ -365,22 +365,22 @@ export const projects = [
     slug: "interview-ready",
     title: "Interview Ready",
     summary:
-      "A study site for system design interviews: short lessons in simple English, clear architecture diagrams and flashcards that come back just before you forget them.",
+      "A study site for tech interviews: system design, low-level design and DSA in JavaScript, with short lessons in simple English, clear diagrams and a built-in code playground.",
     description: [
-      "Interview Ready is where I prepare for system design interviews. The modules go from the basics, like DNS and HTTP, through databases, caching, messaging and distributed systems, to full interview questions such as WhatsApp, Uber and a payment system. Every lesson starts with an everyday comparison, shows the design in a diagram, and ends with what to say in the interview.",
-      "I wanted one free place to open and prepare, without jumping between books, blogs and courses. It's a static Next.js site on Vercel's free plan with no accounts: lesson and flashcard progress are saved in the browser.",
+      "Interview Ready is where I prepare for tech interviews. It has three tracks. System Design goes from DNS and HTTP through databases, caching, messaging and distributed systems to full questions like WhatsApp, Uber and a payment system. Low-Level Design covers OOP, SOLID, design patterns and practice problems like a parking lot, all in JavaScript. DSA is ordered by interview pattern, from two pointers to dynamic programming, with classic problems solved step by step.",
+      "Every lesson starts with an everyday comparison, shows the idea in a diagram or a step-by-step table, and ends with what to say in the interview. It's a static Next.js site on Vercel's free plan with no accounts: progress is saved in the browser.",
     ],
     category: "frontend",
     year: 2026,
     featured: true,
     order: 4,
-    stack: ["Next.js", "React", "TypeScript", "Fumadocs", "MDX", "Mermaid", "Tailwind CSS", "Vercel"],
+    stack: ["Next.js", "React", "TypeScript", "Fumadocs", "MDX", "Mermaid", "CodeMirror", "Tailwind CSS", "Vercel"],
     highlights: [
-      "Lessons from DNS to designing Google Docs, in simple English",
-      "Flashcards that come back after 1, 3, 7, 14, then 30 days",
+      "Three tracks: System Design, Low-Level Design and DSA in JavaScript",
+      "A built-in JavaScript playground to test code next to the lesson",
       "Architecture diagrams, every one checked in a real browser",
     ],
-    tags: ["system-design", "nextjs", "mdx", "mermaid", "flashcards", "spaced-repetition", "learning"],
+    tags: ["system-design", "low-level-design", "dsa", "javascript", "nextjs", "mdx", "mermaid", "learning"],
     cover: {
       src: "/images/projects/interview-ready/cover.webp",
       alt: "A lesson on scaling reads with a colored diagram of a CDN, load balancer, app servers, Redis cache and database replicas, next to a sidebar with finished lessons ticked",
@@ -391,12 +391,12 @@ export const projects = [
     },
     caseStudy: {
       problem:
-        "Preparing for system design interviews means jumping between books, engineering blogs and paid courses, and much of it is dense. I wanted one free place to open and study: short lessons in simple English, clear diagrams, real examples, and a way to keep what I learn.",
+        "Preparing for tech interviews means jumping between books, engineering blogs, paid courses and problem lists, and much of it is dense. I wanted one free place to open and study: short lessons in simple English, clear diagrams, real examples, and a quick way to revise before an interview.",
       goals: [
-        "Everything for system design interviews in one place",
+        "Everything for tech interviews in one place: system design, low-level design and DSA",
         "Simple English, with an everyday comparison for every idea",
         "Clear diagrams that use the same colors on every page",
-        "Flashcards that bring each idea back before it's forgotten",
+        "A last-minute revision page built from every lesson's key points",
         "Free to host, with no login",
       ],
       architecture: [
@@ -411,14 +411,14 @@ export const projects = [
             "All diagrams are written in Mermaid, next to the lesson, so they're easy to change. Each kind of part has its own soft color on every page: users blue, servers indigo, databases amber, caches rose, queues teal. Any diagram opens large with one click, and on phones wide diagrams scroll sideways instead of shrinking.",
         },
         {
-          title: "Flashcards that come back",
+          title: "A JavaScript playground",
           description:
-            "One deck per module, and each card links to the lesson it came from. A card I know moves up a box and comes back after 1, 3, 7, 14, then 30 days. A card I miss goes back to the start and comes back in the same session.",
+            "DSA lessons have a code playground that slides in from the side, so I can test an idea without leaving the page. Code runs in a Web Worker, so an infinite loop can't freeze the page, and console.log prints like Node, even for a linked list that points back at itself.",
         },
         {
           title: "Progress without an account",
           description:
-            "Finished lessons get a green tick in the sidebar, and the home page shows how far I've got. Lesson and flashcard progress are saved in the browser, so there's no server, no login and nothing to pay for.",
+            "Finished lessons get a green tick in the sidebar, and the home page shows how far I've got in each track. Progress is saved in the browser, so there's no server, no login and nothing to pay for.",
         },
       ],
       challenges: [
@@ -447,23 +447,23 @@ export const projects = [
           height: 1640,
         },
         {
-          src: "/images/projects/interview-ready/flashcard.webp",
-          alt: "A flashcard asking What is DNS?, with the answer shown and Again and I knew it buttons",
-          caption: "Click a card to see the answer, then mark Again or I knew it.",
+          src: "/images/projects/interview-ready/dsa-lesson.webp",
+          alt: "A DSA lesson on graph basics with a table of graph words, next to a sidebar of DSA patterns from foundations to math and bits",
+          caption: "DSA is ordered by interview pattern, and each lesson builds the idea up from zero.",
           width: 2560,
           height: 1640,
         },
         {
-          src: "/images/projects/interview-ready/decks.webp",
-          alt: "The flashcard decks, one per module, each with its card counts and a progress bar",
-          caption: "One deck per module, with progress saved in the browser.",
+          src: "/images/projects/interview-ready/lld-lesson.webp",
+          alt: "A low-level design lesson on the Strategy pattern, with the design patterns listed in the sidebar",
+          caption: "Low-Level Design teaches each pattern with an everyday comparison and JavaScript code.",
           width: 2560,
           height: 1640,
         },
       ],
       outcomes: [
         "Live on Vercel's free plan, and every push to GitHub redeploys it",
-        "Automatic checks that every diagram draws and every flashcard links to a real lesson",
+        "Automatic checks that every diagram draws, and every code example was run in Node",
       ],
     },
   },
