@@ -478,6 +478,13 @@ export const projects = [
           width: 2560,
           height: 1640,
         },
+        {
+          src: "/images/projects/interview-ready/react-lesson.webp",
+          alt: "A React lesson on useEffect with a table of what each dependency array does, next to the React track's hooks in the sidebar",
+          caption: "React lessons stay at interview depth: the rule, the trap, and what to say.",
+          width: 2560,
+          height: 1640,
+        },
       ],
       outcomes: [
         "Live on Vercel's free plan, and every push to GitHub redeploys it",
