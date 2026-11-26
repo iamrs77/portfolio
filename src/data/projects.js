@@ -365,22 +365,34 @@ export const projects = [
     slug: "interview-ready",
     title: "Interview Ready",
     summary:
-      "A study site for tech interviews: system design, low-level design and DSA in JavaScript, with short lessons in simple English, clear diagrams and a built-in code playground.",
+      "A study site for tech interviews with six tracks: system design, low-level design, React, DSA, JavaScript and Git. Short lessons in simple English, clear diagrams, code you can run on the page, and a last-minute revision page for each track.",
     description: [
-      "Interview Ready is where I prepare for tech interviews. It has three tracks. System Design goes from DNS and HTTP through databases, caching, messaging and distributed systems to full questions like WhatsApp, Uber and a payment system. Low-Level Design covers OOP, SOLID, design patterns and practice problems like a parking lot, all in JavaScript. DSA is ordered by interview pattern, from two pointers to dynamic programming, with classic problems solved step by step.",
-      "Every lesson starts with an everyday comparison, shows the idea in a diagram or a step-by-step table, and ends with what to say in the interview. It's a static Next.js site on Vercel's free plan with no accounts: progress is saved in the browser.",
+      "Interview Ready is where I prepare for tech interviews. It has six tracks. System Design goes from DNS and HTTP through databases, caching, messaging and distributed systems to full questions like WhatsApp, Uber and a payment system. Low-Level Design covers OOP, SOLID, design patterns and practice problems like a parking lot, all in JavaScript. React goes from JSX and hooks to performance, Server Components and machine-coding tasks like autocomplete and a modal. DSA is ordered by interview pattern, from two pointers to dynamic programming. JavaScript covers the language from closures and the event loop to guess-the-output puzzles, and Git covers the commands interviews ask about.",
+      "Lessons stay at interview depth: the classic traps, an everyday comparison, a diagram or a step-by-step table, and what to say in the interview. It's a static Next.js site on Vercel's free plan with no accounts: progress is saved in the browser.",
     ],
     category: "frontend",
     year: 2026,
     featured: true,
     order: 4,
-    stack: ["Next.js", "React", "TypeScript", "Fumadocs", "MDX", "Mermaid", "CodeMirror", "Tailwind CSS", "Vercel"],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Fumadocs",
+      "MDX",
+      "Mermaid",
+      "CodeMirror",
+      "Excalidraw",
+      "Tailwind CSS",
+      "Vercel",
+    ],
     highlights: [
-      "Three tracks: System Design, Low-Level Design and DSA in JavaScript",
-      "A built-in JavaScript playground to test code next to the lesson",
+      "Six tracks: System Design, Low-Level Design, React, DSA, JavaScript and Git",
+      "Run any JavaScript example on the page, or open a playground beside the lesson",
+      "A drawing board for practising system design and class diagrams",
       "Architecture diagrams, every one checked in a real browser",
     ],
-    tags: ["system-design", "low-level-design", "dsa", "javascript", "nextjs", "mdx", "mermaid", "learning"],
+    tags: ["system-design", "low-level-design", "react", "dsa", "javascript", "git", "nextjs", "mdx", "learning"],
     cover: {
       src: "/images/projects/interview-ready/cover.webp",
       alt: "A lesson on scaling reads with a colored diagram of a CDN, load balancer, app servers, Redis cache and database replicas, next to a sidebar with finished lessons ticked",
@@ -393,7 +405,8 @@ export const projects = [
       problem:
         "Preparing for tech interviews means jumping between books, engineering blogs, paid courses and problem lists, and much of it is dense. I wanted one free place to open and study: short lessons in simple English, clear diagrams, real examples, and a quick way to revise before an interview.",
       goals: [
-        "Everything for tech interviews in one place: system design, low-level design and DSA",
+        "Everything for tech interviews in one place: system design, low-level design, React, DSA, JavaScript and Git",
+        "Only what interviews ask: the classic traps and the answer to give, not every detail",
         "Simple English, with an everyday comparison for every idea",
         "Clear diagrams that use the same colors on every page",
         "A last-minute revision page built from every lesson's key points",
@@ -411,9 +424,9 @@ export const projects = [
             "All diagrams are written in Mermaid, next to the lesson, so they're easy to change. Each kind of part has its own soft color on every page: users blue, servers indigo, databases amber, caches rose, queues teal. Any diagram opens large with one click, and on phones wide diagrams scroll sideways instead of shrinking.",
         },
         {
-          title: "A JavaScript playground",
+          title: "Code you can run",
           description:
-            "DSA lessons have a code playground that slides in from the side, so I can test an idea without leaving the page. Code runs in a Web Worker, so an infinite loop can't freeze the page, and console.log prints like Node, even for a linked list that points back at itself.",
+            "Code examples have a Run button, and a playground slides in from the side to test an idea without leaving the page. A later step runs together with the earlier blocks it needs. Code runs in a Web Worker, so an infinite loop can't freeze the page, and console.log prints like Node, even for a linked list that points back at itself.",
         },
         {
           title: "Progress without an account",
@@ -431,6 +444,11 @@ export const projects = [
           challenge: "A check that passed broken diagrams",
           solution:
             "A script opens every page in a headless browser and compares the diagrams drawn with the diagrams in the lesson. A broken Mermaid diagram still draws a picture, an error picture, so the first version passed broken pages. It now counts those as failures.",
+        },
+        {
+          challenge: "Lessons that went too deep",
+          solution:
+            "The first React lessons read like a textbook: history, rarely asked APIs and three ways to fix every problem. I cut them by about a third, keeping the classic traps, the interview answers and a short Remember this, and wrote the rest of the track at that depth. Every React example was run with the real libraries to check what the lesson says happens.",
         },
         {
           challenge: "Diagrams too small to read",
@@ -464,6 +482,113 @@ export const projects = [
       outcomes: [
         "Live on Vercel's free plan, and every push to GitHub redeploys it",
         "Automatic checks that every diagram draws, and every code example was run in Node",
+      ],
+    },
+  },
+  {
+    slug: "systemscape",
+    title: "Systemscape",
+    summary:
+      "Learn how big apps are built: system-design lessons on live, simulated architecture diagrams. Watch requests flow, push the traffic, break things and fix them.",
+    description: [
+      "Systemscape takes apps people use every day, a ride-hailing app, a video streaming app and UPI payments, and opens up their backends one step at a time: what each part does, how a request moves between them, and what breaks when everyone shows up at once. It also draws Stockroom, my own inventory app, from its real design. A hand-written course on the fundamentals teaches the ideas first, from load balancing and caching to replication, queues and circuit breakers.",
+      "Behind every diagram is a simulation. Change the traffic, take a part down or switch retries off, and the numbers and the diagram change with it. A panel beside the diagram says what's failing and why, with a fix to try in one click. It's a static React site with no server: everything runs in the browser.",
+    ],
+    category: "frontend",
+    year: 2026,
+    featured: true,
+    order: 5,
+    stack: ["React", "TypeScript", "Vite", "SVG", "Zustand", "Zod", "Tailwind CSS", "GitHub Actions", "Vercel"],
+    highlights: [
+      "A live simulation behind every diagram: load, failures, retries, caches and autoscaling",
+      "Lessons made from each system's data, plus a hand-written course on the fundamentals",
+      "A fix to try for every problem, in one click",
+      "Everything runs in the browser, with no server",
+    ],
+    tags: ["system-design", "simulation", "react", "typescript", "svg", "learning"],
+    cover: {
+      src: "/images/projects/systemscape/cover.webp",
+      alt: "A ride-hailing lesson in a sudden rainstorm: Dispatch and the ETA service are overloaded and only 46.8% of ride requests succeed, with the step explained beside the diagram",
+    },
+    links: {
+      repo: "https://github.com/iamrs77/systemscape",
+      live: "https://systemscape-amber.vercel.app",
+    },
+    caseStudy: {
+      problem:
+        "Architecture diagrams are static. They show the boxes, but not what happens on a busy Friday night, when a cache restarts or a payment provider goes down. I wanted a way to learn system design by watching a real design work, pushing it until it breaks, and fixing it.",
+      goals: [
+        "See a request move through a real design, one call at a time",
+        "Show what breaks under load, and why, with numbers that come from a model",
+        "Let anyone change the traffic, take parts down and try fixes",
+        "Plain words, with every bit of jargon explained where it appears",
+        "Free to host, with nothing to run on a server",
+      ],
+      architecture: [
+        {
+          title: "A system is data",
+          description:
+            "Each system is one TypeScript file: its parts, the journeys through them and the busy nights it faces. A Zod schema and a second check make sure every part a journey mentions exists, and list every mistake at once. Adding a system means writing data, not code.",
+        },
+        {
+          title: "A simulation that finds where things settle",
+          description:
+            "Load and failures feed each other: failures cause retries, retries add load, and load causes failures. The simulation goes round until the numbers stop moving, modelling queueing delay, overload, timeouts, retries, circuit breakers, caches, background work and autoscaling that can't keep up with a sudden rush. It's deterministic and takes well under a millisecond.",
+        },
+        {
+          title: "Lessons that can't drift from the numbers",
+          description:
+            "A system's lessons are made from its data: the big picture a row at a time, then a step per call of each journey, then the night that's hardest on it. Every number a step quotes comes from running the simulation under that step's conditions, so the text and the diagram always agree.",
+        },
+        {
+          title: "A diagram drawn in SVG",
+          description:
+            "Each part is a soft, raised block with its icon, and requests are dots moving along the arrows: more for busier calls, red for the ones that fail. Each lesson step glides to the parts it's about. Every part's name is a real button that the keyboard reaches and screen readers can describe.",
+        },
+      ],
+      challenges: [
+        {
+          challenge: "Numbers that could swing instead of settling",
+          solution:
+            "Retries and failures feed each other, so jumping straight to each new failure rate can bounce back and forth. Each round moves the failure rates only halfway towards their new value, so they settle, and the loop stops as soon as nothing moves.",
+        },
+        {
+          challenge: "Arrows piled on top of each other",
+          solution:
+            "In busy designs, calls ran along the same lines and crossed where they met a part. Calls leaving the same side of a part now leave at spread-out points, in the order of where they go, and calls sharing a street each get a track of their own.",
+        },
+        {
+          challenge: "Hundreds of steps, each with its own numbers",
+          solution:
+            "The fundamentals have hundreds of lesson steps, and each one runs the simulation under its own conditions. Instead of working them all out when the app loads, a lesson's steps are worked out when it's opened.",
+        },
+      ],
+      gallery: [
+        {
+          src: "/images/projects/systemscape/home.webp",
+          alt: "The home page: the fundamentals as a winding path of colored tracks, and the four systems, each with a drawn poster",
+          caption: "The fundamentals wind down the page as a path, and each system has its own poster.",
+          width: 1440,
+          height: 1894,
+        },
+        {
+          src: "/images/projects/systemscape/overview.webp",
+          alt: "A ride-hailing lesson zoomed in on the rider app calling the load balancer, with the booking that's sent shown beside it",
+          caption: "Each lesson follows one request, a call at a time, and shows what's actually sent.",
+          width: 1440,
+          height: 900,
+        },
+        {
+          src: "/images/projects/systemscape/explore.webp",
+          alt: "Explore freely on New Year's Eve: overloaded parts in red, and a list of problems, each with a fix to try",
+          caption: "Explore freely: push the traffic, take parts down, and try a fix for each problem.",
+          width: 1440,
+          height: 900,
+        },
+      ],
+      outcomes: [
+        "Live on Vercel's free plan, as a static site with no server",
+        "Every push is checked by ESLint, Prettier, the TypeScript checker and the build",
       ],
     },
   },
