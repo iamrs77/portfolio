@@ -1,10 +1,7 @@
-import { ArrowRight } from "lucide-react";
-import { ProjectGrid } from "@/components/projects/project-grid";
-import { ButtonLink } from "@/components/ui/button";
+import { ProjectIndex } from "@/components/projects/project-index";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { siteConfig } from "@/data/site";
 import { getAllProjects, getFeaturedProjects } from "@/lib/projects";
-import { routes } from "@/lib/urls";
 
 export function FeaturedProjects() {
   const all = getAllProjects();
@@ -23,15 +20,8 @@ export function FeaturedProjects() {
         eyebrow="Projects"
         title={copy.heading}
         description={copy.description}
-        action={
-          <ButtonLink href={routes.projects} variant="secondary">
-            All projects
-            <span className="font-mono text-xs text-muted">{all.length}</span>
-            <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-300 group-hover/button:translate-x-0.5" />
-          </ButtonLink>
-        }
       />
-      <ProjectGrid projects={projects} spotlightFirst />
+      <ProjectIndex projects={projects} />
     </Section>
   );
 }

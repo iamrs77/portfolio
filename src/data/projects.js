@@ -19,6 +19,7 @@ export const projects = [
     year: 2026,
     featured: true,
     order: 1,
+    accent: "#4f46e5",
     stack: [
       "TypeScript",
       "Node.js",
@@ -139,7 +140,8 @@ export const projects = [
     category: "data",
     year: 2026,
     featured: true,
-    order: 3,
+    order: 5,
+    accent: "#059669",
     stack: ["Python", "Streamlit", "pandas", "NumPy", "yfinance", "Alpaca API", "Finnhub API", "pytest", "GitHub Actions"],
     highlights: [
       "Every verdict comes with the reasons behind it",
@@ -236,6 +238,7 @@ export const projects = [
     year: 2026,
     featured: true,
     order: 2,
+    accent: "#dc2626",
     stack: [
       "React",
       "Node.js",
@@ -373,7 +376,8 @@ export const projects = [
     category: "frontend",
     year: 2026,
     featured: true,
-    order: 4,
+    order: 3,
+    accent: "#7c3aed",
     stack: [
       "Next.js",
       "React",
@@ -504,7 +508,8 @@ export const projects = [
     category: "frontend",
     year: 2026,
     featured: true,
-    order: 5,
+    order: 4,
+    accent: "#c026d3",
     stack: ["React", "TypeScript", "Vite", "SVG", "Zustand", "Zod", "Tailwind CSS", "GitHub Actions", "Vercel"],
     highlights: [
       "A live simulation behind every diagram: load, failures, retries, caches and autoscaling",

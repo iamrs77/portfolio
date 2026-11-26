@@ -76,6 +76,7 @@ Every optional field:
   year: 2026,
   featured: true,                      // show on the home page
   order: 1,                            // manual sort (lower first); otherwise newest year first
+  accent: "#4f46e5",                   // the project's own colour, shown when its row is hovered
   draft: false,                        // drafts only show in `npm run dev`
   stack: ["Next.js", "PostgreSQL", "WebSockets"],
   highlights: [                        // the first 2 or 3 appear on cards

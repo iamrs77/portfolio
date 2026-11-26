@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { ButtonLink } from "@/components/ui/button";
+import { TipLabel } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 /**
@@ -38,19 +39,21 @@ export function ProjectLinks({ project, variant = "button", className }) {
 
   if (variant === "icon") {
     const iconLink =
-      "grid size-9 place-items-center rounded-full border bg-surface text-muted transition-colors hover:border-border-strong hover:text-foreground";
+      "group/tip relative grid size-9 place-items-center rounded-full border bg-surface text-muted transition-colors hover:border-border-strong hover:text-foreground";
     return (
       <div className={cn("flex items-center gap-1.5", className)}>
         {repo && (
           <a href={repo} target="_blank" rel="noopener noreferrer" className={iconLink}>
             <FaGithub aria-hidden="true" className="size-4" />
             <span className="sr-only">{project.title} source code (opens in a new tab)</span>
+            <TipLabel>View the code on GitHub</TipLabel>
           </a>
         )}
         {live && (
           <a href={live} target="_blank" rel="noopener noreferrer" className={iconLink}>
             <ArrowUpRight aria-hidden="true" className="size-4" />
             <span className="sr-only">{project.title} live demo (opens in a new tab)</span>
+            <TipLabel>Open the live demo</TipLabel>
           </a>
         )}
       </div>

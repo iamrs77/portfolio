@@ -72,6 +72,9 @@ function validateProjects(projects) {
     if (!project.stack?.length) problems.push("stack must list at least one technology");
     else if (project.stack.some(isBlank)) problems.push("stack contains an empty entry");
     if (project.order !== undefined && !Number.isFinite(project.order)) problems.push("order must be a number");
+    if (project.accent !== undefined && !/^#[0-9a-f]{6}$/i.test(project.accent)) {
+      problems.push(`accent "${project.accent}" must be a hex colour like "#4f46e5"`);
+    }
 
     for (const [key, url] of Object.entries(project.links ?? {})) {
       if (url !== undefined && !isHttpUrl(url)) problems.push(`links.${key} must be a full http(s) URL`);

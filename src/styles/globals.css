@@ -238,3 +238,39 @@
     animation: none;
   }
 }
+
+/* The dashed lines in the project drawings: requests and deliveries moving along them. */
+.ill-flow {
+  animation: ill-flow 1.4s linear infinite;
+}
+
+@keyframes ill-flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ill-flow {
+    animation: none;
+  }
+}
+
+/*
+ * The tile behind a project card's drawing: a faint dotted grid with a glow of the project's colour
+ * (--project) in one corner. In the components layer, so utility classes can still change it.
+ */
+@layer components {
+  .ill-tile {
+    background:
+      radial-gradient(120% 100% at 100% 0%, color-mix(in oklab, var(--project) 14%, transparent), transparent 60%),
+      radial-gradient(var(--grid-line) 1px, transparent 1.3px) 0 0 / 12px 12px,
+      var(--surface-muted);
+  }
+
+  /* the soft shadow under the panels inside a drawing */
+  .ill-shadow {
+    filter: drop-shadow(0 6px 10px rgb(var(--shadow-color) / 0.1));
+  }
+}
+

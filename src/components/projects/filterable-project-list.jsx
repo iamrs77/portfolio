@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ProjectFilters } from "@/components/projects/project-filters";
-import { ProjectGrid } from "@/components/projects/project-grid";
+import { ProjectIndex } from "@/components/projects/project-index";
 
 /** The full project list with category filters. */
 export function FilterableProjectList({ projects, categories }) {
@@ -17,8 +17,7 @@ export function FilterableProjectList({ projects, categories }) {
       <p className="sr-only" aria-live="polite">
         {`Showing ${visible.length} ${visible.length === 1 ? "project" : "projects"}`}
       </p>
-      {/* Re-keying replays the staggered entrance whenever the filter changes. */}
-      <ProjectGrid key={active} projects={visible} headingLevel="h2" showFeaturedBadge />
+      <ProjectIndex projects={visible} headingLevel="h2" />
     </div>
   );
 }
